@@ -1,4 +1,4 @@
-import { Body, ConsoleLogger, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
+import { Body, ConsoleLogger, Controller, Get, NotFoundException, Param, ParseUUIDPipe, Post, Query, UseInterceptors } from '@nestjs/common';
 import { CreatePostDto } from './dtos';
 import { PaginationParamsDto } from '../common/pagination-params.dto';
 import { PostsService } from './services/posts.service';
@@ -6,10 +6,12 @@ import { ReadPostResponseDto } from './dtos/read-post-response.dto';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { PostEntity } from './entities/post.entity';
 import { PartialType } from '@nestjs/mapped-types';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 // @ApiBearerAuth()
 // @UseGuards(JwtGuard)
 @Controller('posts')
+@UseInterceptors(CacheInterceptor)
 export class PostsController {
   logger: ConsoleLogger;
 
@@ -22,6 +24,7 @@ export class PostsController {
   // GET /api/v1/posts
   @Get()
   async findAll(@Query() query: PaginationParamsDto) {
+    this.logger.log('findAll ... ');
     await this.service.findAll(query.offset, query.limit);
     const posts = await this.service.findAll();
 

@@ -58,3 +58,4 @@ The focus will be on creating and reading blog.editorconfig posts, with Redis ca
 4067* git commit -m "first commit"
 4068* git remote add origin git@github.com:razab/nestjs-posts-test.git
 4069* git push -u origin master
+
