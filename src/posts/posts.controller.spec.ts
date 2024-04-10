@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 
 import { PostsController } from './posts.controller';
 import ormConfigTest from '../config/orm.config.test';
 import { PostEntity } from './entities/post.entity';
 import { PostsService } from './services/posts.service';
-import { CacheModule } from '@nestjs/cache-manager';
 
 describe('PostsController', () => {
   let controller: PostsController;
