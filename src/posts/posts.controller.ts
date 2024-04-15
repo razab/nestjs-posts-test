@@ -22,11 +22,12 @@ export class PostsController {
   }
 
   // GET /api/v1/posts
+  // TODO: should return page info for current request, especially for default offset/limit , with count
+  // TODO: should implement interceptor for statuses/errors
   @Get()
   async findAll(@Query() query: PaginationParamsDto) {
-    this.logger.log('findAll ... ');
-    await this.service.findAll(query.offset, query.limit);
-    const posts = await this.service.findAll();
+    this.logger.log('findAll ' + JSON.stringify(query));
+    const posts = await this.service.findAll(query.offset, query.limit);
 
     return plainToInstance(ReadPostResponseDto, instanceToPlain(posts), { excludeExtraneousValues: true }); // will hide updatedAt as it is not exposed
   }
