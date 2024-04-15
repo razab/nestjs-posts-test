@@ -20,7 +20,7 @@ export class PostsService {
     // return await this.repository.createQueryBuilder().insert().into(PostEntity).values(postData).execute();
   }
 
-  async findAll(offset: number = 0, limit: number = 100): Promise<PostEntity[]> {
+  async findAll(offset: number = 0, limit: number = 10): Promise<PostEntity[]> {
     return await this.repository.find({
       take: limit,
       skip: offset,
