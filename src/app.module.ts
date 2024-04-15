@@ -18,7 +18,8 @@ import { PostsService } from './posts/services/posts.service';
       store: redisStore,
       host: '127.0.0.1',
       port: 6379,
-      ttl: 5 * 60 * 1000, // we have @nestjs/cache-manager@5 , it's milliseconds
+      // we have @nestjs/cache-manager@5 , it's milliseconds
+      ttl: process.env.NODE_ENV === 'production' ? 5 * 60 * 1000 : 1,
       // max: 10, // maximum number of items in cache
       isGlobal: true,
     }),
@@ -28,7 +29,7 @@ import { PostsService } from './posts/services/posts.service';
       expandVariables: true,
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: process.env.NODE_ENV !== 'production' ? ormConfig : ormConfigProd,
+      useFactory: process.env.NODE_ENV === 'production' ? ormConfigProd : ormConfig,
     }),
     TypeOrmModule.forFeature([PostEntity]),
   ],
